@@ -87,19 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             () {
                               loginbloc.login(emailController.text,
                                   passwordController.text);
-                              Fluttertoast.showToast(
-                                msg: 'Login button pressed',
-                              );
                             },
                           ),
                           SizedBox(width: size.width / 20),
                           CustomButton(
                             'Forgotten password!',
                             2.58,
-                            () {
-                              Fluttertoast.showToast(
-                                  msg: 'Forgotten password button pressed');
-                            },
+                            () {},
                           ),
                         ],
                       ),

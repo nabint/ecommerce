@@ -1,4 +1,4 @@
-import 'package:ecommerce/presentation/home/carditem.dart';
+import 'package:ecommerce/presentation/home/widgets/carditem.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

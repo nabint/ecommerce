@@ -41,6 +41,9 @@ class LoginCubit extends Cubit<LoginState> {
   logout() async {
     try {
       authRepo.signOut();
+      emit(
+        SignedOut(),
+      );
     } catch (e) {
       emit(
         SignOutError(),

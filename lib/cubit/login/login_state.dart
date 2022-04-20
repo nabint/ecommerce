@@ -8,7 +8,10 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoggedIn extends LoginState {}
+
 class SignOutError extends LoginState {}
+
+class SignedOut extends LoginState {}
 
 class LoginError extends LoginState {
   final String message;

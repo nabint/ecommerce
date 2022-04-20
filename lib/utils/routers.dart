@@ -19,7 +19,7 @@ class Routers {
     switch (settings.name) {
       case SPLASH:
         return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+          builder: (_) => SplashScreen(),
         );
       case LOGIN_PAGE:
         return MaterialPageRoute(
@@ -27,7 +27,7 @@ class Routers {
         );
       case HOME_PAGE:
         return MaterialPageRoute(
-          builder: (_) => const HomePage(),
+          builder: (_) => HomePage(),
         );
       case REGISTER_PAGE:
         return MaterialPageRoute(

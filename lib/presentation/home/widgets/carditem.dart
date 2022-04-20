@@ -27,7 +27,7 @@ class CardItem extends StatelessWidget {
                   ),
                 ),
                 const Center(
-                  child: Padding(
+                child: Padding(
                     padding: EdgeInsets.only(top: 35.0, bottom: 31.0),
                     child: Text(
                       'Apple Watch',
