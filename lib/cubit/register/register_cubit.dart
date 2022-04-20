@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -20,15 +22,21 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       String res = await authRepo.signUp(email: email, password: password);
       if (res == "Signed up") {
+        log(res);
         emit(
           RegisterLoaded(),
         );
       } else {
-        RegisterError();
+        log("Register format error " + res);
+        emit(
+          RegisterError(message: res),
+        );
       }
     } catch (e) {
       emit(
-        RegisterError(),
+        RegisterError(
+          message: e.toString(),
+        ),
       );
     }
   }

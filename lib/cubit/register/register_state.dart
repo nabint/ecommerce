@@ -9,4 +9,9 @@ class RegisterLoading extends RegisterState {}
 
 class RegisterLoaded extends RegisterState {}
 
-class RegisterError extends RegisterState {}
+class RegisterError extends RegisterState {
+  String message;
+  RegisterError({
+    required this.message,
+  });
+}

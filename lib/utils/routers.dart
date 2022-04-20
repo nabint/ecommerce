@@ -1,6 +1,7 @@
 import 'package:ecommerce/cubit/login/login_cubit.dart';
 import 'package:ecommerce/presentation/auth/login_screen.dart';
 import 'package:ecommerce/presentation/auth/register_screen.dart';
+import 'package:ecommerce/presentation/home/home.dart';
 import 'package:ecommerce/presentation/splash.dart';
 import 'package:ecommerce/repository/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,11 @@ class Routers {
         );
       case LOGIN_PAGE:
         return MaterialPageRoute(
-          builder: (_) => LoginScreen(),
+          builder: (_) => const LoginScreen(),
+        );
+      case HOME_PAGE:
+        return MaterialPageRoute(
+          builder: (_) => const HomePage(),
         );
       case REGISTER_PAGE:
         return MaterialPageRoute(

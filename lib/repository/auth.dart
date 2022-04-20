@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -9,7 +11,7 @@ class AuthRepo {
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
-  Future<bool> signIn({
+  Future<String> signIn({
     required String email,
     required String password,
   }) async {
@@ -18,9 +20,9 @@ class AuthRepo {
         email: email,
         password: password,
       );
-      return true;
+      return "Logged In";
     } on FirebaseAuthException catch (e) {
-      return false;
+      return e.message!;
     }
   }
 
@@ -28,11 +30,14 @@ class AuthRepo {
     required String email,
     required String password,
   }) async {
+    log("Email " + email + password);
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      log("Signed Up");
       return "Signed up";
     } on FirebaseAuthException catch (e) {
+      log("Error" + e.message!);
       return e.message!;
     }
   }

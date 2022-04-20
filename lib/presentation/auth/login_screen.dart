@@ -35,6 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         // TODO: implement listener
+        if (state is LoginError) {
+          Fluttertoast.showToast(
+            msg: state.message,
+          );
+        } else if (state is LoggedIn) {
+          Navigator.pushReplacementNamed(
+            context,
+            Routers.HOME_PAGE,
+          );
+        }
       },
       child: Scaffold(
         backgroundColor: const Color(0xff192028),
@@ -109,8 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             context,
                             Routers.REGISTER_PAGE,
                           );
-                          Fluttertoast.showToast(
-                              msg: 'Create a new account button pressed');
                         },
                       ),
                       SizedBox(height: size.height * .05),

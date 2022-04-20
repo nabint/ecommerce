@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -16,14 +18,15 @@ class LoginCubit extends Cubit<LoginState> {
       LoginLoading(),
     );
     try {
-      bool res = await authRepo.signIn(email: email, password: password);
-      if (res == true) {
+      String res =
+          await authRepo.signIn(email: email.trim(), password: password);
+      if (res == "Logged In") {
         emit(
           LoggedIn(),
         );
       } else {
         LoginError(
-          message: "error loggin in",
+          message: res,
         );
       }
     } catch (e) {
@@ -34,8 +37,6 @@ class LoginCubit extends Cubit<LoginState> {
       );
     }
   }
-
-
 
   logout() async {
     try {
