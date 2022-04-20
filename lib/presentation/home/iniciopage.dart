@@ -16,7 +16,7 @@ class InicioPage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 50),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
                           Padding(
@@ -55,18 +55,18 @@ class InicioPage extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     const Padding(
-                      padding: EdgeInsets.only(right: 40, top: 55.0, left: 50),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 40),
                       child: Text(
                         'Order online collect in store',
                         style: TextStyle(
-                            fontFamily: 'Raleway',
-                            fontSize: 34.0,
-                            fontWeight: FontWeight.w700),
+                          fontFamily: 'Raleway',
+                          fontSize: 34.0,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                    //Caroussel()
                     const Padding(
                       padding: EdgeInsets.only(left: 0),
                       child: SelectionScreen(),
