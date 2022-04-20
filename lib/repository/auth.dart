@@ -9,7 +9,7 @@ class AuthRepo {
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
-  Future<String> signIn({
+  Future<bool> signIn({
     required String email,
     required String password,
   }) async {
@@ -18,9 +18,9 @@ class AuthRepo {
         email: email,
         password: password,
       );
-      return "Signed in";
+      return true;
     } on FirebaseAuthException catch (e) {
-      return e.message!;
+      return false;
     }
   }
 
@@ -35,5 +35,9 @@ class AuthRepo {
     } on FirebaseAuthException catch (e) {
       return e.message!;
     }
+  }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
   }
 }

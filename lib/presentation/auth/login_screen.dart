@@ -1,169 +1,123 @@
 import 'dart:ui';
-
+import 'package:ecommerce/cubit/login/login_cubit.dart';
+import 'package:ecommerce/presentation/auth/widgets/customButton.dart';
+import 'package:ecommerce/presentation/auth/widgets/customTextField.dart';
+import 'package:ecommerce/utils/routers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late LoginCubit loginbloc;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    loginbloc = context.read<LoginCubit>();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Color(0xff192028),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: size.height,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: size.height * .1),
-                      child: Text(
-                        'Demo Ecommerce',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(.7),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                          wordSpacing: 4,
-                        ),
+
+    return BlocListener<LoginCubit, LoginState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xff192028),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: size.height,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: size.height * .1),
+                    child: Text(
+                      'Demo Ecommerce',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(.7),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                        wordSpacing: 4,
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 7,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        component1(
-                          Icons.email_outlined,
-                          'Email...',
-                          false,
-                          true,
-                          context,
-                        ),
-                        component1(
-                          Icons.lock_outline,
-                          'Password...',
-                          true,
-                          false,
-                          context,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            component2('LOGIN', 2.58, () {
-                              HapticFeedback.lightImpact();
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomTextField(Icons.email_outlined, 'Email...', false,
+                          true, emailController),
+                      CustomTextField(Icons.lock_outline, 'Password...', true,
+                          false, passwordController),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            'LOGIN',
+                            2.58,
+                            () {
+                              loginbloc.login(emailController.text,
+                                  passwordController.text);
                               Fluttertoast.showToast(
-                                  msg: 'Login button pressed');
-                            }, context),
-                            SizedBox(width: size.width / 20),
-                            component2('Forgotten password!', 2.58, () {
-                              HapticFeedback.lightImpact();
+                                msg: 'Login button pressed',
+                              );
+                            },
+                          ),
+                          SizedBox(width: size.width / 20),
+                          CustomButton(
+                            'Forgotten password!',
+                            2.58,
+                            () {
                               Fluttertoast.showToast(
                                   msg: 'Forgotten password button pressed');
-                            }, context),
-                          ],
-                        ),
-                      ],
-                    ),
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        component2('Create a new Account', 2, () {
-                          HapticFeedback.lightImpact();
+                ),
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CustomButton(
+                        'Create a new Account',
+                        2,
+                        () {
+                          Navigator.pushNamed(
+                            context,
+                            Routers.REGISTER_PAGE,
+                          );
                           Fluttertoast.showToast(
                               msg: 'Create a new account button pressed');
-                        }, context),
-                        SizedBox(height: size.height * .05),
-                      ],
-                    ),
+                        },
+                      ),
+                      SizedBox(height: size.height * .05),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget component1(IconData icon, String hintText, bool isPassword,
-      bool isEmail, BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaY: 15,
-          sigmaX: 15,
-        ),
-        child: Container(
-          height: size.width / 8,
-          width: size.width / 1.2,
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(right: size.width / 30),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.05),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: TextField(
-            style: TextStyle(color: Colors.white.withOpacity(.8)),
-            cursorColor: Colors.white,
-            obscureText: isPassword,
-            keyboardType:
-                isEmail ? TextInputType.emailAddress : TextInputType.text,
-            decoration: InputDecoration(
-              prefixIcon: Icon(
-                icon,
-                color: Colors.white.withOpacity(.7),
-              ),
-              border: InputBorder.none,
-              hintMaxLines: 1,
-              hintText: hintText,
-              hintStyle:
-                  TextStyle(fontSize: 14, color: Colors.white.withOpacity(.5)),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget component2(
-    String string,
-    double width,
-    VoidCallback voidCallback,
-    BuildContext context,
-  ) {
-    Size size = MediaQuery.of(context).size;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
-        child: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: voidCallback,
-          child: Container(
-            height: size.width / 8,
-            width: size.width / width,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.05),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Text(
-              string,
-              style: TextStyle(color: Colors.white.withOpacity(.8)),
+                ),
+              ],
             ),
           ),
         ),
